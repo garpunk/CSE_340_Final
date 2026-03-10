@@ -1,6 +1,7 @@
 {
   "name": "CSE_340_Final",
   "dependencies": {
+    "ejs": "^5.0.1",
     "express": "^5.2.1"
   },
   "type": "module",
@@ -9,6 +10,7 @@
     "start": "node server.js"
   },
   "devDependencies": {
-    "nodemon": "^3.1.14"
+    "nodemon": "^3.1.14",
+    "ws": "^8.19.0"
   }
 }

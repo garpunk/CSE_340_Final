@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      ejs:
+        specifier: ^5.0.1
+        version: 5.0.1
       express:
         specifier: ^5.2.1
         version: 5.2.1
@@ -15,6 +18,9 @@ importers:
       nodemon:
         specifier: ^3.1.14
         version: 3.1.14
+      ws:
+        specifier: ^8.19.0
+        version: 8.19.0
 
 packages:
 
@@ -97,6 +103,11 @@ packages:
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
+
+  ejs@5.0.1:
+    resolution: {integrity: sha512-COqBPFMxuPTPspXl2DkVYaDS3HtrD1GpzOGkNTJ1IYkifq/r9h8SVEFrjA3D9/VJGOEoMQcrlhpntcSUrM8k6A==}
+    engines: {node: '>=0.12.18'}
+    hasBin: true
 
   encodeurl@2.0.0:
     resolution: {integrity: sha512-Q0n9HRi4m6JuGIV1eFlmvJB7ZEVxu93IrMyiMsGC0lrMJMWzRgx6WGquyfQgZVb31vhGgXnfmPNNXmxnOkRBrg==}
@@ -380,6 +391,18 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
+  ws@8.19.0:
+    resolution: {integrity: sha512-blAT2mjOEIi0ZzruJfIhb3nps74PRWTCz1IjglWEEpQl5XS/UNama6u2/rjFkDDouqr4L67ry+1aGIALViWjDg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
 snapshots:
 
   accepts@2.0.0:
@@ -465,6 +488,8 @@ snapshots:
       gopd: 1.2.0
 
   ee-first@1.1.1: {}
+
+  ejs@5.0.1: {}
 
   encodeurl@2.0.0: {}
 
@@ -776,3 +801,5 @@ snapshots:
   vary@1.1.2: {}
 
   wrappy@1.0.2: {}
+
+  ws@8.19.0: {}
