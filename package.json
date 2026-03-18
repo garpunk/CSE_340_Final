@@ -2,7 +2,8 @@
   "name": "CSE_340_Final",
   "dependencies": {
     "ejs": "^5.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "pg": "^8.20.0"
   },
   "type": "module",
   "scripts": {
