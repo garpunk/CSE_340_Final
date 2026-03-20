@@ -1,0 +1,19 @@
+<%- include('../partials/header') %>
+<main>
+  <h1><%= title %></h1>
+  <p>Signed in as <strong><%= user.name %></strong> (<%= user.email %>)</p>
+  <p>Role: <strong><%= user.role %></strong></p>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <% if (user.role === 'admin' || user.role === 'staff') { %>
+    <li><a href="/staff-area">Staff area</a> (admin &amp; staff)</li>
+    <% } %>
+    <% if (user.role === 'admin') { %>
+    <li><a href="/admin-area">Admin area</a> (admin only)</li>
+    <% } %>
+  </ul>
+  <form method="post" action="/logout" style="margin-top: 1rem">
+    <button type="submit">Sign out</button>
+  </form>
+</main>
+<%- include('../partials/footer') %>

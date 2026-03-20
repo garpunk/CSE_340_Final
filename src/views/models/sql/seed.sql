@@ -4,11 +4,12 @@ VALUES
     ('Hardware Issue', 'Laptop, monitor, keyboard, printer, or device issues'),
     ('Software Issue', 'App installs, crashes, license issues, or access problems');
 
+-- Password for all seed accounts (README): P@$$w0rd!
 INSERT INTO users (name, email, password_hash, role)
 VALUES
-    ('Admin User', 'admin@campus.local', '$2b$12$replace_with_real_hash', 'admin'),
-    ('Staff User', 'staff@campus.local', '$2b$12$replace_with_real_hash', 'staff'),
-    ('Student User', 'student@campus.local', '$2b$12$replace_with_real_hash', 'user');
+    ('Admin User', 'admin@campus.local', '$2b$10$HFL.tGAAejgzHNOkOxd9wuYn50crd/3VMHIeHwZQPB2Fo/k4/NCgq', 'admin'),
+    ('Staff User', 'staff@campus.local', '$2b$10$HFL.tGAAejgzHNOkOxd9wuYn50crd/3VMHIeHwZQPB2Fo/k4/NCgq', 'staff'),
+    ('Student User', 'student@campus.local', '$2b$10$HFL.tGAAejgzHNOkOxd9wuYn50crd/3VMHIeHwZQPB2Fo/k4/NCgq', 'user');
 
 INSERT INTO tickets (title, description, status, user_id, assigned_to, category_id)
 VALUES

@@ -60,4 +60,10 @@ if (process.env.NODE_ENV?.includes('dev') && process.env.ENABLE_SQL_LOGGING === 
   db = pool;
 }
 
+/** Connection options for connect-pg-simple (same SSL as main pool). */
+export const pgSessionConObject = {
+  connectionString: process.env.DB_URL,
+  ssl: sslConfig,
+};
+
 export default db;

@@ -1,6 +1,11 @@
 // Imports
 import { setupDatabase, testConnection } from "./src/models/setup.js";
+import { pgSessionConObject } from "./src/models/db.js";
+import { startSessionCleanup } from "./src/utils/session-cleanup.js";
+import authRoutes from "./src/routes/auth.js";
 import express from "express";
+import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
 import { fileURLToPath } from "url";
 import path from "path";
 
@@ -12,8 +17,41 @@ const __dirname = path.dirname(__filename);
 const NODE_ENV = process.env.NODE_ENV || "production";
 const PORT = process.env.PORT || 3000;
 
+if (!process.env.SESSION_SECRET && !String(NODE_ENV).includes("dev")) {
+  console.error("FATAL: SESSION_SECRET must be set when NODE_ENV is not development.");
+  process.exit(1);
+}
+
 //Express Server
 const app = express();
+
+app.set("trust proxy", 1);
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+const PgSession = connectPgSimple(session);
+app.use(
+  session({
+    store: new PgSession({
+      conObject: pgSessionConObject,
+      tableName: "session",
+      createTableIfMissing: true,
+    }),
+    secret:
+      process.env.SESSION_SECRET || "development-only-change-me-unsafe",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: !NODE_ENV.includes("dev"),
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      sameSite: "lax",
+    },
+  })
+);
+
+startSessionCleanup();
 
 /**
  * Configure Express middleware
@@ -35,12 +73,13 @@ app.set("views", path.join(__dirname, "src/views"));
  * them individually from each route handler
  */
 app.use((req, res, next) => {
-  // Make NODE_ENV available to all templates
   res.locals.NODE_ENV = NODE_ENV.toLowerCase() || "production";
-
-  // Continue to the next middleware or route handler
+  res.locals.user = req.session?.user ?? null;
+  res.locals.isLoggedIn = Boolean(req.session?.user);
   next();
 });
+
+app.use(authRoutes);
 
 /**
  * Routes
@@ -83,12 +122,25 @@ app.use((err, req, res, next) => {
 
   // Determine status and template
   const status = err.status || 500;
-  const template = status === 404 ? "404" : "500";
+  const template =
+    status === 404 ? "404" : status === 403 ? "403" : "500";
 
   // Prepare data for the template
+  const safeUserMessage =
+    status === 403
+      ? err.message || "You do not have permission to view this page."
+      : NODE_ENV === "production"
+        ? "An error occurred"
+        : err.message;
+
   const context = {
-    title: status === 404 ? "Page Not Found" : "Server Error",
-    error: NODE_ENV === "production" ? "An error occurred" : err.message,
+    title:
+      status === 404
+        ? "Page Not Found"
+        : status === 403
+          ? "Forbidden"
+          : "Server Error",
+    error: safeUserMessage,
     stack: NODE_ENV === "production" ? null : err.stack,
     NODE_ENV, // Our WebSocket check needs this and its convenient to pass along
   };
