@@ -3,3 +3,4 @@ resources.md
 requirements.md
 CSE_340_Practice
 .env.example
+update_seed_passwords.sql
