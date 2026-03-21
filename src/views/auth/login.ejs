@@ -1,16 +1,6 @@
 <%- include('../partials/header') %>
 <main>
   <h1><%= title %></h1>
-  <% if (typeof registered !== 'undefined' && registered) { %>
-  <p class="notice">Registration successful. Please sign in.</p>
-  <% } %>
-  <% if (errors && errors.length) { %>
-  <ul class="form-errors">
-    <% errors.forEach(function (msg) { %>
-    <li><%= msg %></li>
-    <% }); %>
-  </ul>
-  <% } %>
   <form method="post" action="/login" class="stack-form" novalidate>
     <div>
       <label for="email">Email</label>
@@ -18,7 +8,6 @@
         type="email"
         id="email"
         name="email"
-        value="<%= form.email %>"
         required
         autocomplete="username"
       />

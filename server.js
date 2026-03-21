@@ -2,7 +2,8 @@
 import { setupDatabase, testConnection } from "./src/models/setup.js";
 import { pgSessionConObject } from "./src/models/db.js";
 import { startSessionCleanup } from "./src/utils/session-cleanup.js";
-import authRoutes from "./src/routes/auth.js";
+import authRoutes, { processLogout } from "./src/routes/auth.js";
+import flash from "./src/middleware/flash.js";
 import express from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
@@ -14,18 +15,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Define the port number the server will listen on
-const NODE_ENV = process.env.NODE_ENV || "production";
+const NODE_ENV = process.env.NODE_ENV?.toLowerCase() || "production";
 const PORT = process.env.PORT || 3000;
-
-if (!process.env.SESSION_SECRET && !String(NODE_ENV).includes("dev")) {
-  console.error("FATAL: SESSION_SECRET must be set when NODE_ENV is not development.");
-  process.exit(1);
-}
 
 //Express Server
 const app = express();
-
-app.set("trust proxy", 1);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -38,15 +32,13 @@ app.use(
       tableName: "session",
       createTableIfMissing: true,
     }),
-    secret:
-      process.env.SESSION_SECRET || "development-only-change-me-unsafe",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
-      secure: !NODE_ENV.includes("dev"),
+      secure: NODE_ENV.includes("dev") !== true,
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
-      sameSite: "lax",
     },
   })
 );
@@ -79,7 +71,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(flash);
+
 app.use(authRoutes);
+app.get("/logout", processLogout);
 
 /**
  * Routes
