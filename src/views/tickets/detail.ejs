@@ -1,0 +1,67 @@
+<%- include('../partials/header') %>
+<main class="ticket-page">
+  <h1><%= ticket.title %></h1>
+  <p class="actions">
+    <a href="/tickets">All tickets</a>
+  </p>
+  <div class="ticket-meta">
+    <p><strong>Status:</strong> <span class="status-badge"><%= ticket.status %></span></p>
+    <p><strong>Category:</strong> <%= ticket.category_name %></p>
+    <p><strong>Opened by:</strong> <%= ticket.user_name %> (<%= ticket.user_email %>)</p>
+    <p><strong>Assignee:</strong> <%= ticket.assignee_name || '—' %></p>
+    <p><strong>Created:</strong> <%= new Date(ticket.created_at).toLocaleString() %></p>
+    <p><strong>Updated:</strong> <%= new Date(ticket.updated_at).toLocaleString() %></p>
+  </div>
+  <div class="ticket-description"><%= ticket.description %></div>
+
+  <% if (canManage) { %>
+  <section class="staff-panel">
+    <h2>Staff actions</h2>
+    <form method="post" action="/tickets/<%= ticket.id %>/status" class="stack-form">
+      <label for="status">Update status</label>
+      <select id="status" name="status" required>
+        <% ['open','assigned','in_progress','resolved','closed'].forEach(function (s) { %>
+        <option value="<%= s %>" <%= ticket.status === s ? 'selected' : '' %>><%= s.replace(/_/g, ' ') %></option>
+        <% }); %>
+      </select>
+      <button type="submit">Save status</button>
+    </form>
+    <form method="post" action="/tickets/<%= ticket.id %>/assign" class="inline-form">
+      <button type="submit">Assign to me</button>
+    </form>
+  </section>
+  <% } %>
+
+  <section class="comments">
+    <h2>Activity / comments</h2>
+    <% if (!comments || comments.length === 0) { %>
+      <p>No comments yet.</p>
+    <% } else { %>
+      <% comments.forEach(function (c) { %>
+      <article class="comment">
+        <div class="comment-meta">
+          <strong><%= c.user_name %></strong>
+          · <%= new Date(c.created_at).toLocaleString() %>
+        </div>
+        <p class="comment-body"><%= c.comment %></p>
+        <% if (user && String(c.user_id) === String(user.id)) { %>
+        <div class="comment-actions">
+          <a href="/tickets/<%= ticket.id %>/comments/<%= c.id %>/edit">Edit</a>
+          <form method="post" action="/tickets/<%= ticket.id %>/comments/<%= c.id %>/delete" class="inline-form" onsubmit="return confirm('Delete this comment?');">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+        <% } %>
+      </article>
+      <% }); %>
+    <% } %>
+
+    <h2>Add a comment</h2>
+    <form method="post" action="/tickets/<%= ticket.id %>/comments" class="stack-form">
+      <label for="comment">Comment</label>
+      <textarea id="comment" name="comment" maxlength="2000" required></textarea>
+      <button type="submit">Post comment</button>
+    </form>
+  </section>
+</main>
+<%- include('../partials/footer') %>

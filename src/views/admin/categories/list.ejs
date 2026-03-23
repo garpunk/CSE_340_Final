@@ -1,0 +1,36 @@
+<%- include('../../partials/header') %>
+<main class="ticket-page">
+  <h1><%= title %></h1>
+  <p class="actions">
+    <a href="/admin/categories/new">New category</a>
+    <a href="/">Home</a>
+  </p>
+  <% if (!categories || categories.length === 0) { %>
+    <p>No categories.</p>
+  <% } else { %>
+    <table class="ticket-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% categories.forEach(function (c) { %>
+        <tr>
+          <td><%= c.name %></td>
+          <td><%= c.description || '—' %></td>
+          <td>
+            <a href="/admin/categories/<%= c.id %>/edit">Edit</a>
+            <form method="post" action="/admin/categories/<%= c.id %>/delete" class="inline-form" onsubmit="return confirm('Delete this category?');">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</main>
+<%- include('../../partials/footer') %>

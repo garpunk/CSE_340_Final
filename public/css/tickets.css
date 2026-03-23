@@ -1,0 +1,158 @@
+/* Ticket & admin category pages (native CSS nesting, course style) */
+.ticket-page {
+  max-width: 52rem;
+  margin: 0 auto;
+
+  h1 {
+    color: #1a365d;
+  }
+
+  .actions {
+    margin: 1rem 0;
+
+    a,
+    button {
+      margin-right: 0.75rem;
+    }
+  }
+}
+
+.ticket-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: #fff;
+  border: 1px solid #cbd5e0;
+
+  th,
+  td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  th {
+    background: #edf2f7;
+    font-weight: 600;
+  }
+
+  a {
+    color: #2b6cb0;
+    font-weight: 600;
+  }
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  background: #e2e8f0;
+}
+
+.ticket-meta {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+
+  p {
+    margin: 0.35rem 0;
+  }
+}
+
+.ticket-description {
+  margin: 1rem 0;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.comments {
+  margin-top: 1.5rem;
+
+  h2 {
+    font-size: 1.1rem;
+    color: #1a365d;
+  }
+}
+
+.comment {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  background: #f7fafc;
+
+  .comment-meta {
+    font-size: 0.85rem;
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+  }
+
+  .comment-body {
+    white-space: pre-wrap;
+    margin: 0;
+  }
+
+  .comment-actions {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+
+    a {
+      margin-right: 0.75rem;
+      color: #2b6cb0;
+    }
+  }
+}
+
+.stack-form {
+  label {
+    display: block;
+    font-weight: 600;
+    margin-top: 1rem;
+  }
+
+  input[type="text"],
+  select,
+  textarea {
+    width: 100%;
+    max-width: 36rem;
+    margin-top: 0.25rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    min-height: 8rem;
+  }
+
+  button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+}
+
+.inline-form {
+  display: inline;
+  margin-right: 0.75rem;
+
+  button {
+    cursor: pointer;
+  }
+}
+
+.staff-panel {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #bee3f8;
+  background: #ebf8ff;
+  border-radius: 6px;
+
+  h2 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #2c5282;
+  }
+}

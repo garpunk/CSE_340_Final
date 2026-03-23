@@ -2,8 +2,8 @@
 import { setupDatabase, testConnection } from "./src/models/setup.js";
 import { pgSessionConObject } from "./src/models/db.js";
 import { startSessionCleanup } from "./src/utils/session-cleanup.js";
-import authRoutes, { processLogout } from "./src/routes/auth.js";
 import flash from "./src/middleware/flash.js";
+import routes from "./src/controllers/routes.js";
 import { addLocalVariables } from "./src/middleware/global.js";
 import express from "express";
 import session from "express-session";
@@ -63,33 +63,7 @@ app.use(express.json());
 app.use(addLocalVariables);
 app.use(flash);
 
-app.use(authRoutes);
-app.get("/logout", processLogout);
-
-/**
- * Routes
- */
-app.get("/", (req, res) => {
-  const title = "Welcome Home";
-  res.render("home", { title });
-});
-
-app.get("/about", (req, res) => {
-  const title = "About Me";
-  res.render("about", { title });
-});
-
-app.get("/services", (req, res) => {
-  const title = "Our Services";
-  res.render("services", { title });
-});
-
-// Test route for 500 errors
-app.get("/test-error", (req, res, next) => {
-  const err = new Error("This is a test error");
-  err.status = 500;
-  next(err);
-});
+app.use("/", routes);
 
 // Catch-all route for 404 errors
 app.use((req, res, next) => {

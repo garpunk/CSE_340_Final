@@ -1,0 +1,11 @@
+<%- include('../partials/header') %>
+<main class="ticket-page">
+  <h1><%= title %></h1>
+  <p><a href="/tickets/<%= ticket.id %>">Back to ticket</a></p>
+  <form method="post" action="/tickets/<%= ticket.id %>/comments/<%= comment.id %>" class="stack-form">
+    <label for="comment">Comment</label>
+    <textarea id="comment" name="comment" maxlength="2000" required><%= comment.comment %></textarea>
+    <button type="submit">Save</button>
+  </form>
+</main>
+<%- include('../partials/footer') %>

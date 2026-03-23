@@ -1,0 +1,18 @@
+<%- include('../../partials/header') %>
+<main class="ticket-page">
+  <h1><%= title %></h1>
+  <p><a href="/admin/categories">Back to list</a></p>
+  <% const action = category ? `/admin/categories/${category.id}` : '/admin/categories'; %>
+  <form method="post" action="<%= action %>" class="stack-form">
+    <div>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" maxlength="100" required value="<%= category ? category.name : '' %>" />
+    </div>
+    <div>
+      <label for="description">Description</label>
+      <textarea id="description" name="description" maxlength="500"><%= category ? (category.description || '') : '' %></textarea>
+    </div>
+    <button type="submit"><%= category ? 'Save changes' : 'Create category' %></button>
+  </form>
+</main>
+<%- include('../../partials/footer') %>
