@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 /**
  * Login validation (matches course practice project rules).
@@ -44,4 +44,85 @@ const registerValidation = [
     }),
 ];
 
-export { loginValidation, registerValidation };
+const TICKET_STATUSES = [
+  "open",
+  "assigned",
+  "in_progress",
+  "resolved",
+  "closed",
+];
+
+const ticketCreateValidation = [
+  body("title")
+    .trim()
+    .isLength({ min: 1, max: 200 })
+    .withMessage("Title is required (max 200 characters)"),
+  body("description")
+    .trim()
+    .isLength({ min: 1, max: 5000 })
+    .withMessage("Description is required (max 5000 characters)"),
+  body("category_id")
+    .trim()
+    .isInt({ min: 1 })
+    .withMessage("Please choose a category"),
+];
+
+const ticketStatusValidation = [
+  param("id").trim().isInt({ min: 1 }).withMessage("Invalid ticket"),
+  body("status")
+    .trim()
+    .isIn(TICKET_STATUSES)
+    .withMessage("Invalid status"),
+];
+
+const ticketCommentValidation = [
+  param("id").trim().isInt({ min: 1 }).withMessage("Invalid ticket"),
+  body("comment")
+    .trim()
+    .isLength({ min: 1, max: 2000 })
+    .withMessage("Comment is required (max 2000 characters)"),
+];
+
+const ticketCommentIdValidation = [
+  param("id").trim().isInt({ min: 1 }).withMessage("Invalid ticket"),
+  param("commentId")
+    .trim()
+    .isInt({ min: 1 })
+    .withMessage("Invalid comment"),
+];
+
+const commentBodyValidation = [
+  body("comment")
+    .trim()
+    .isLength({ min: 1, max: 2000 })
+    .withMessage("Comment is required (max 2000 characters)"),
+];
+
+const categoryValidation = [
+  body("name")
+    .trim()
+    .isLength({ min: 1, max: 100 })
+    .withMessage("Name is required (max 100 characters)"),
+  body("description")
+    .optional({ values: "falsy" })
+    .trim()
+    .isLength({ max: 500 })
+    .withMessage("Description is too long"),
+];
+
+const categoryIdParam = [
+  param("id").trim().isInt({ min: 1 }).withMessage("Invalid category"),
+];
+
+export {
+  loginValidation,
+  registerValidation,
+  ticketCreateValidation,
+  ticketStatusValidation,
+  ticketCommentValidation,
+  ticketCommentIdValidation,
+  commentBodyValidation,
+  categoryValidation,
+  categoryIdParam,
+  TICKET_STATUSES,
+};

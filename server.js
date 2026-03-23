@@ -4,6 +4,7 @@ import { pgSessionConObject } from "./src/models/db.js";
 import { startSessionCleanup } from "./src/utils/session-cleanup.js";
 import authRoutes, { processLogout } from "./src/routes/auth.js";
 import flash from "./src/middleware/flash.js";
+import { addLocalVariables } from "./src/middleware/global.js";
 import express from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
@@ -20,9 +21,6 @@ const PORT = process.env.PORT || 3000;
 
 //Express Server
 const app = express();
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
 const PgSession = connectPgSimple(session);
 app.use(
@@ -58,19 +56,11 @@ app.set("view engine", "ejs");
 // Tell Express where to find your templates
 app.set("views", path.join(__dirname, "src/views"));
 
-/**
- * Global template variables middleware
- *
- * Makes common variables available to all EJS templates without having to pass
- * them individually from each route handler
- */
-app.use((req, res, next) => {
-  res.locals.NODE_ENV = NODE_ENV.toLowerCase() || "production";
-  res.locals.user = req.session?.user ?? null;
-  res.locals.isLoggedIn = Boolean(req.session?.user);
-  next();
-});
+// Parse POST bodies (after static; same order as course practice project)
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
+app.use(addLocalVariables);
 app.use(flash);
 
 app.use(authRoutes);
