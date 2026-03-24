@@ -3,6 +3,10 @@
   <h1><%= title %></h1>
   <p>This page is only visible to <strong>admin</strong> and <strong>staff</strong> roles.</p>
   <p>Signed in as <%= user.name %> (<%= user.role %>).</p>
-  <p><a href="/account">Back to account</a></p>
+  <p>Use the ticket queue to change status, assign tickets to yourself, and reply with comments.</p>
+  <ul>
+    <li><a href="/tickets">All tickets</a></li>
+    <li><a href="/account">Back to account</a></li>
+  </ul>
 </main>
 <%- include('../partials/footer') %>

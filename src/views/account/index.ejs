@@ -5,11 +5,12 @@
   <p>Role: <strong><%= user.role %></strong></p>
   <ul>
     <li><a href="/">Home</a></li>
+    <li><a href="/tickets">Support tickets</a> — submit a request or view your tickets</li>
     <% if (user.role === 'admin' || user.role === 'staff') { %>
-    <li><a href="/staff-area">Staff area</a> (admin &amp; staff)</li>
+    <li><a href="/staff-area">Staff area</a> — queue overview</li>
     <% } %>
     <% if (user.role === 'admin') { %>
-    <li><a href="/admin-area">Admin area</a> (admin only)</li>
+    <li><a href="/admin-area">Admin area</a> — manage categories and more</li>
     <% } %>
   </ul>
   <p style="margin-top: 1rem"><a href="/logout">Sign out</a></p>
