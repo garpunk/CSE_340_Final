@@ -1,0 +1,37 @@
+<%- include('../../partials/header') %>
+<main class="ticket-page">
+  <h1><%= title %></h1>
+  <p>Directory of all accounts.</p>
+  <p class="actions">
+    <a href="/admin/categories">Categories</a>
+    <a href="/admin-area">Admin area</a>
+    <a href="/">Home</a>
+  </p>
+  <% if (!users || users.length === 0) { %>
+    <p>No users found.</p>
+  <% } else { %>
+    <table class="ticket-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% users.forEach(function (u) { %>
+        <tr>
+          <td><%= u.id %></td>
+          <td><%= u.name %></td>
+          <td><%= u.email %></td>
+          <td><span class="status-badge"><%= u.role %></span></td>
+          <td><%= new Date(u.created_at).toLocaleString() %></td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+</main>
+<%- include('../../partials/footer') %>

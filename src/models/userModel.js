@@ -47,4 +47,16 @@ const emailExists = async (email) => {
   return result.rowCount > 0;
 };
 
-export { createUser, emailExists, findUserByEmail, verifyPassword };
+/**
+ * All users for admin UI (no password hash).
+ */
+const listUsers = async () => {
+  const result = await db.query(
+    `SELECT id, name, email, role, created_at
+     FROM users
+     ORDER BY id ASC`
+  );
+  return result.rows;
+};
+
+export { createUser, emailExists, findUserByEmail, listUsers, verifyPassword };
