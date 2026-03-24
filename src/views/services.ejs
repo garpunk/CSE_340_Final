@@ -1,6 +1,18 @@
 <%- include('partials/header') %>
 <main>
   <h1><%= title %></h1>
-  <!-- Put your page-specific content here -->
+  <p>Typical requests handled through the ticket system:</p>
+  <ul>
+    <li><strong>Network</strong> — Wi-Fi, VPN, or connectivity problems</li>
+    <li><strong>Hardware</strong> — laptops, monitors, printers, peripherals</li>
+    <li><strong>Software</strong> — installs, licenses, access, or application errors</li>
+  </ul>
+  <p>When you open a ticket, choose the category that best matches your issue. Staff update status as work progresses (for example open → in progress → resolved).</p>
+  <% if (typeof isLoggedIn !== 'undefined' && isLoggedIn) { %>
+  <p><a href="/tickets/new">Submit a new ticket</a></p>
+  <% } else { %>
+  <p><a href="/login">Sign in</a> to submit a ticket.</p>
+  <% } %>
+  <p><a href="/">Home</a></p>
 </main>
 <%- include('partials/footer') %>
