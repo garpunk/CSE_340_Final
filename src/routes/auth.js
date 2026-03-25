@@ -24,7 +24,7 @@ const showLoginForm = (req, res) => {
 };
 
 /**
- * Process login form submission (flash + redirect — course practice pattern).
+ * Process login form submission (flash + redirect)
  */
 const processLogin = async (req, res, next) => {
   const errors = validationResult(req);
@@ -68,7 +68,7 @@ const processLogin = async (req, res, next) => {
 
 /**
  * Handle user logout.
- * NOTE: connect.sid is the default session cookie name.
+ * note to self: connect.sid is the default session cookie name.
  */
 const processLogout = (req, res) => {
   if (!req.session) {

@@ -29,7 +29,7 @@ const listPage = async (req, res, next) => {
 };
 
 /**
- * POST /admin/users/:id/role — set role (not your own; keep ≥1 admin).
+ * POST /admin/users/:id/role — set role (not your own; keep ≥1 admin). IMPORTANT
  */
 const updateRoleHandler = async (req, res, next) => {
   const errors = validationResult(req);

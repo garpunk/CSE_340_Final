@@ -1,5 +1,5 @@
 /**
- * Basic site pages (course practice pattern: thin controllers).
+ * Basic site pages 
  */
 const homePage = (req, res) => {
   res.render("home", { title: "Welcome Home" });

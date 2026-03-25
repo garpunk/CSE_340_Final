@@ -1,7 +1,7 @@
 import { body, param } from "express-validator";
 
 /**
- * Login validation (matches course practice project rules).
+ * Login validation 
  */
 const loginValidation = [
   body("email")

@@ -56,7 +56,7 @@ app.set("view engine", "ejs");
 // Tell Express where to find your templates
 app.set("views", path.join(__dirname, "src/views"));
 
-// Parse POST bodies (after static; same order as course practice project)
+// Parse POST bodies 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
