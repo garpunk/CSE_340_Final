@@ -114,6 +114,16 @@ const categoryIdParam = [
   param("id").trim().isInt({ min: 1 }).withMessage("Invalid category"),
 ];
 
+const USER_ROLES = ["admin", "staff", "user"];
+
+const adminUserRoleValidation = [
+  param("id").trim().isInt({ min: 1 }).withMessage("Invalid user"),
+  body("role")
+    .trim()
+    .isIn(USER_ROLES)
+    .withMessage("Invalid role"),
+];
+
 export {
   loginValidation,
   registerValidation,
@@ -124,5 +134,7 @@ export {
   commentBodyValidation,
   categoryValidation,
   categoryIdParam,
+  adminUserRoleValidation,
+  USER_ROLES,
   TICKET_STATUSES,
 };

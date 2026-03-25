@@ -143,6 +143,23 @@
   }
 }
 
+.admin-role-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  align-items: center;
+
+  select {
+    max-width: 9rem;
+    padding: 0.35rem;
+  }
+
+  button {
+    padding: 0.35rem 0.6rem;
+    cursor: pointer;
+  }
+}
+
 .staff-panel {
   margin: 1rem 0;
   padding: 1rem;

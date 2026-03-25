@@ -1,7 +1,7 @@
 <%- include('../../partials/header') %>
 <main class="ticket-page">
   <h1><%= title %></h1>
-  <p>Directory of all accounts.</p>
+  <p>Directory of all accounts. You can change another user’s role below; you cannot change your own while signed in.</p>
   <p class="actions">
     <a href="/admin/categories">Categories</a>
     <a href="/admin-area">Admin area</a>
@@ -18,6 +18,7 @@
           <th>Email</th>
           <th>Role</th>
           <th>Created</th>
+          <th>Set role</th>
         </tr>
       </thead>
       <tbody>
@@ -28,6 +29,20 @@
           <td><%= u.email %></td>
           <td><span class="status-badge"><%= u.role %></span></td>
           <td><%= new Date(u.created_at).toLocaleString() %></td>
+          <td>
+            <% if (typeof user !== 'undefined' && user && String(u.id) === String(user.id)) { %>
+            <em>—</em>
+            <% } else { %>
+            <form method="post" action="/admin/users/<%= u.id %>/role" class="admin-role-form">
+              <select name="role" aria-label="New role">
+                <option value="user" <%= u.role === 'user' ? 'selected' : '' %>>user</option>
+                <option value="staff" <%= u.role === 'staff' ? 'selected' : '' %>>staff</option>
+                <option value="admin" <%= u.role === 'admin' ? 'selected' : '' %>>admin</option>
+              </select>
+              <button type="submit">Update</button>
+            </form>
+            <% } %>
+          </td>
         </tr>
         <% }); %>
       </tbody>
