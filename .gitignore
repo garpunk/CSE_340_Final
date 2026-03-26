@@ -1,5 +1,6 @@
 .env
 resources.md
 requirements.md
+interview.md
 .env.example
 update_seed_passwords.sql
