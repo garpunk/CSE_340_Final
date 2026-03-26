@@ -12,6 +12,7 @@ import { listCategories } from "../../models/categories/categories.js";
 import {
   createComment,
   deleteComment,
+  deleteCommentOnTicket,
   findCommentById,
   listCommentsForTicket,
   updateComment,
@@ -262,15 +263,37 @@ const deleteCommentHandler = async (req, res, next) => {
   const user = req.session.user;
 
   try {
+    const ticket = await findTicketRowById(ticketId);
+    if (!viewerCanAccessTicket(ticket, user)) {
+      const err = new Error("Page Not Found");
+      err.status = 404;
+      return next(err);
+    }
+
     const row = await findCommentById(commentId);
     if (!row || String(row.ticket_id) !== String(ticketId)) {
       req.flash("error", "Comment not found.");
       return res.redirect("/tickets");
     }
-    if (String(row.user_id) !== String(user.id)) {
+
+    const isStaffOrAdmin = user.role === "admin" || user.role === "staff";
+    const isAuthor = String(row.user_id) === String(user.id);
+
+    if (isStaffOrAdmin) {
+      const ok = await deleteCommentOnTicket(commentId, ticketId);
+      if (!ok) {
+        req.flash("error", "Could not remove comment.");
+        return res.redirect(`/tickets/${ticketId}`);
+      }
+      req.flash("success", "Comment removed.");
+      return res.redirect(`/tickets/${ticketId}`);
+    }
+
+    if (!isAuthor) {
       req.flash("error", "You can only delete your own comments.");
       return res.redirect(`/tickets/${ticketId}`);
     }
+
     await deleteComment(commentId, user.id);
     req.flash("success", "Comment removed.");
     return res.redirect(`/tickets/${ticketId}`);

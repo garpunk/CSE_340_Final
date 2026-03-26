@@ -44,12 +44,18 @@
           · <%= new Date(c.created_at).toLocaleString() %>
         </div>
         <p class="comment-body"><%= c.comment %></p>
-        <% if (user && String(c.user_id) === String(user.id)) { %>
+        <% const isOwnComment = user && String(c.user_id) === String(user.id); %>
+        <% const canDeleteComment = isOwnComment || canManage; %>
+        <% if (isOwnComment || canManage) { %>
         <div class="comment-actions">
+          <% if (isOwnComment) { %>
           <a href="/tickets/<%= ticket.id %>/comments/<%= c.id %>/edit">Edit</a>
+          <% } %>
+          <% if (canDeleteComment) { %>
           <form method="post" action="/tickets/<%= ticket.id %>/comments/<%= c.id %>/delete" class="inline-form" onsubmit="return confirm('Delete this comment?');">
             <button type="submit">Delete</button>
           </form>
+          <% } %>
         </div>
         <% } %>
       </article>

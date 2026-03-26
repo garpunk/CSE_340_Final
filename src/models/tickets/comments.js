@@ -52,10 +52,20 @@ const deleteComment = async (id, userId) => {
   return result.rowCount > 0;
 };
 
+// Staff/admin: remove any comment on a ticket
+const deleteCommentOnTicket = async (commentId, ticketId) => {
+  const result = await db.query(
+    `DELETE FROM ticket_comments WHERE id = $1 AND ticket_id = $2`,
+    [commentId, ticketId],
+  );
+  return result.rowCount > 0;
+};
+
 export {
   listCommentsForTicket,
   createComment,
   findCommentById,
   updateComment,
   deleteComment,
+  deleteCommentOnTicket,
 };

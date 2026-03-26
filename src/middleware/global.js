@@ -1,5 +1,5 @@
 /**
- * Head asset helpers (course practice pattern).
+ * Head asset helpers 
  */
 const setHeadAssetsFunctionality = (res) => {
   res.locals.styles = [];
@@ -29,7 +29,7 @@ const setHeadAssetsFunctionality = (res) => {
 };
 
 /**
- * Global template locals (matches CSE_340_Practice shape).
+ * Global template locals 
  */
 const addLocalVariables = (req, res, next) => {
   setHeadAssetsFunctionality(res);
