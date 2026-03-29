@@ -79,10 +79,12 @@ main {
     margin: 0 0 1rem;
   }
 
-  ul {
+  ul,
+  ol {
+    list-style: none;
     line-height: 1.6;
     margin: 0 0 1rem;
-    padding-left: 1.25rem;
+    padding-left: 0;
   }
 
   li {
