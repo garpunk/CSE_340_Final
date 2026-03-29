@@ -7,10 +7,10 @@
     categories.
   </p>
   <% if (typeof isLoggedIn !== 'undefined' && isLoggedIn) { %>
-  <p><a href="/tickets">Go to your tickets</a> · <a href="/account">Account</a></p>
+  <p><a href="/tickets">Go to your tickets</a> <a href="/account">Account</a></p>
   <% } else { %>
   <p><a href="/register">Create an account</a> or <a href="/login">sign in</a> to submit a ticket.</p>
   <% } %>
-  <p><a href="/services">What we support</a> · <a href="/about">About</a></p>
+  <p><a href="/services">What we support</a> <a href="/about">About</a></p>
 </main>
 <%- include('partials/footer') %>
