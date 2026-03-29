@@ -12,6 +12,7 @@ import {
   listCategories,
   updateCategory,
   countTicketsInCategory,
+  reassignTicketsFromCategory,
 } from "../../models/categories/categories.js";
 
 const router = Router();
@@ -102,16 +103,38 @@ const updateHandler = async (req, res, next) => {
   }
 };
 
+// Logic for ticket reassignment
+
 const deleteHandler = async (req, res, next) => {
   const id = Number(req.params.id);
   try {
     const n = await countTicketsInCategory(id);
     if (n > 0) {
-      req.flash(
-        "error",
-        "Cannot delete a category that still has tickets. Reassign tickets first.",
-      );
-      return res.redirect("/admin/categories");
+      const raw = req.body.reassign_to;
+      const toId =
+        raw !== undefined && raw !== null && String(raw).trim() !== ""
+          ? Number(raw)
+          : NaN;
+      if (!Number.isInteger(toId) || toId < 1) {
+        req.flash(
+          "error",
+          "Choose a category to move existing tickets into before deleting.",
+        );
+        return res.redirect("/admin/categories");
+      }
+      if (toId === id) {
+        req.flash(
+          "error",
+          "Choose a different category than the one you are deleting.",
+        );
+        return res.redirect("/admin/categories");
+      }
+      const target = await getCategoryById(toId);
+      if (!target) {
+        req.flash("error", "That category does not exist.");
+        return res.redirect("/admin/categories");
+      }
+      await reassignTicketsFromCategory(id, toId);
     }
     const ok = await deleteCategory(id);
     if (!ok) {

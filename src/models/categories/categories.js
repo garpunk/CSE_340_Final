@@ -2,9 +2,10 @@ import db from "../db.js";
 
 const listCategories = async () => {
   const result = await db.query(
-    `SELECT id, name, description
-     FROM categories
-     ORDER BY name ASC`,
+    `SELECT c.id, c.name, c.description,
+            (SELECT COUNT(*)::int FROM tickets t WHERE t.category_id = c.id) AS ticket_count
+     FROM categories c
+     ORDER BY c.name ASC`,
   );
   return result.rows;
 };
@@ -51,6 +52,14 @@ const countTicketsInCategory = async (categoryId) => {
   return result.rows[0]?.n ?? 0;
 };
 
+const reassignTicketsFromCategory = async (fromCategoryId, toCategoryId) => {
+  const result = await db.query(
+    `UPDATE tickets SET category_id = $2 WHERE category_id = $1`,
+    [fromCategoryId, toCategoryId],
+  );
+  return result.rowCount;
+};
+
 export {
   listCategories,
   getCategoryById,
@@ -58,4 +67,5 @@ export {
   updateCategory,
   deleteCategory,
   countTicketsInCategory,
+  reassignTicketsFromCategory,
 };

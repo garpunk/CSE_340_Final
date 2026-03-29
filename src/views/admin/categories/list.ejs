@@ -23,7 +23,7 @@
           <td><%= c.description || '—' %></td>
           <td>
             <a href="/admin/categories/<%= c.id %>/edit">Edit</a>
-            <form method="post" action="/admin/categories/<%= c.id %>/delete" class="inline-form" onsubmit="return confirm('Delete this category?');">
+            <form method="post" action="/admin/categories/<%= c.id %>/delete" class="inline-form category-delete-form" data-category-id="<%= c.id %>" data-ticket-count="<%= c.ticket_count %>">
               <button type="submit">Delete</button>
             </form>
           </td>
@@ -32,5 +32,95 @@
       </tbody>
     </table>
   <% } %>
+  <dialog id="categoryReassignDialog" class="category-delete-dialog">
+    <p id="categoryReassignDialogText"></p>
+    <div class="category-delete-dialog-field">
+      <label for="categoryReassignSelect">Move tickets to</label>
+      <select id="categoryReassignSelect"></select>
+    </div>
+    <div class="category-delete-dialog-actions">
+      <button type="button" id="categoryReassignCancel">Cancel</button>
+      <button type="button" id="categoryReassignConfirm">Delete and move tickets</button>
+    </div>
+  </dialog>
 </main>
+<script>
+(function () {
+  var categories = <%- JSON.stringify((categories || []).map(function (c) { return { id: c.id, name: c.name }; })) %>;
+  var dialogEl = document.getElementById("categoryReassignDialog");
+  var dialogText = document.getElementById("categoryReassignDialogText");
+  var selectEl = document.getElementById("categoryReassignSelect");
+  var cancelBtn = document.getElementById("categoryReassignCancel");
+  var confirmBtn = document.getElementById("categoryReassignConfirm");
+  var pendingForm = null;
+  function openReassignDialog(form, ticketCount) {
+    var id = Number(form.getAttribute("data-category-id"));
+    var others = categories.filter(function (c) { return Number(c.id) !== id; });
+    if (others.length === 0) {
+      window.alert("Create another category first, then you can move tickets and delete this one.");
+      return;
+    }
+    pendingForm = form;
+    selectEl.innerHTML = "";
+    others.forEach(function (c) {
+      var opt = document.createElement("option");
+      opt.value = String(c.id);
+      opt.textContent = c.name;
+      selectEl.appendChild(opt);
+    });
+    dialogText.textContent =
+      "This category has " +
+      ticketCount +
+      " ticket" +
+      (ticketCount === 1 ? "" : "s") +
+      ". Pick a category to move them into, then delete.";
+    if (typeof dialogEl.showModal === "function") {
+      dialogEl.showModal();
+    } else {
+      dialogEl.setAttribute("open", "");
+    }
+  }
+  document.querySelectorAll(".category-delete-form").forEach(function (form) {
+    form.addEventListener("submit", function (e) {
+      var n = Number(form.getAttribute("data-ticket-count")) || 0;
+      if (n > 0) {
+        e.preventDefault();
+        openReassignDialog(form, n);
+        return;
+      }
+      if (!window.confirm("Delete this category?")) {
+        e.preventDefault();
+      }
+    });
+  });
+  cancelBtn.addEventListener("click", function () {
+    pendingForm = null;
+    if (typeof dialogEl.close === "function") {
+      dialogEl.close();
+    } else {
+      dialogEl.removeAttribute("open");
+    }
+  });
+  confirmBtn.addEventListener("click", function () {
+    if (!pendingForm) return;
+    var val = selectEl.value;
+    if (!val) return;
+    var prev = pendingForm.querySelector('input[name="reassign_to"]');
+    if (prev) prev.remove();
+    var input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "reassign_to";
+    input.value = val;
+    pendingForm.appendChild(input);
+    var f = pendingForm;
+    pendingForm = null;
+    if (typeof dialogEl.close === "function") {
+      dialogEl.close();
+    } else {
+      dialogEl.removeAttribute("open");
+    }
+    f.submit();
+  });
+})();
+</script>
 <%- include('../../partials/footer') %>

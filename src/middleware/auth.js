@@ -12,12 +12,12 @@ const requireLogin = (req, res, next) => {
 };
 
 /**
- * Middleware factory to require a specific role (course practice pattern).
+ * Middleware factory to require a specific role
  * Uses flash messages and redirects — not HTTP 403.
  */
- // @param {string} roleName  Role required: 'admin', 'staff', or 'user'
- // @returns {Function} Express middleware
- 
+// @param {string} roleName  Role required: 'admin', 'staff', or 'user'
+// @returns {Function} Express middleware
+
 const requireRole = (roleName) => {
   return (req, res, next) => {
     if (!req.session || !req.session.user) {
@@ -35,7 +35,7 @@ const requireRole = (roleName) => {
 };
 
 /**
- * Staff or admin only (IT helpdesk). Same UX as requireRole: flash + redirect home.
+ * Staff or admin only (IT helpdesk)
  */
 const requireStaffOrAdmin = (req, res, next) => {
   if (!req.session || !req.session.user) {
@@ -43,8 +43,8 @@ const requireStaffOrAdmin = (req, res, next) => {
     return res.redirect("/login");
   }
 
-  const r = req.session.user.role;
-  if (r !== "staff" && r !== "admin") {
+  const userRole = req.session.user.role;
+  if (userRole !== "staff" && userRole !== "admin") {
     req.flash("error", "You do not have permission to access this page.");
     return res.redirect("/");
   }
