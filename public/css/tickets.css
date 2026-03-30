@@ -1,219 +1,399 @@
-
 .ticket-page {
-  max-width: 52rem;
+  max-width: var(--content-max, 52rem);
   margin: 0 auto;
+}
 
-  h1 {
-    color: #1a365d;
-  }
+.ticket-page > h1 {
+  margin-bottom: var(--space-sm, 0.5rem);
+}
 
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    align-items: center;
-    margin: 1rem 0;
-  }
+.ticket-page p.actions {
+  max-width: none;
+}
+
+.ticket-page .actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm, 0.5rem);
+  align-items: center;
+  margin: var(--space-md, 1rem) 0 var(--space-lg, 1.5rem);
+}
+
+.ticket-page .actions a[href] {
+  margin: 0;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: var(--space-md, 1rem) 0;
+  border-radius: var(--radius-md, 0.5rem);
+  border: 1px solid var(--color-border, #e2e8f0);
+  background: var(--color-surface, #fff);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
 }
 
 .ticket-table {
   width: 100%;
+  min-width: min(40rem, 100%);
   border-collapse: collapse;
-  margin-top: 1rem;
-  background: #fff;
-  border: 1px solid #cbd5e0;
+  margin: 0;
+  background: var(--color-surface, #fff);
+  border: none;
+  font-size: 0.9375rem;
+}
 
-  th,
-  td {
-    padding: 0.5rem 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
-  }
+.ticket-table th,
+.ticket-table td {
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-border, #e2e8f0);
+}
 
-  th {
-    background: #edf2f7;
-    font-weight: 600;
-  }
+.ticket-table th {
+  background: var(--color-bg, #f1f5f9);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted, #64748b);
+  white-space: nowrap;
+}
 
-  a[href] {
-    padding: 0.3rem 0.6rem;
-    font-size: 0.85rem;
-    margin: 0;
+.ticket-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+@media (hover: hover) {
+  .ticket-table tbody tr:hover td {
+    background: rgba(13, 148, 136, 0.04);
   }
+}
+
+.ticket-table td a[href] {
+  display: inline-flex;
+  align-items: center;
+  min-height: auto;
+  margin: 0;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-primary-hover, #0f766e);
+  text-decoration: none;
+  background: var(--color-primary-muted, rgba(13, 148, 136, 0.12));
+  border: 1px solid rgba(13, 148, 136, 0.35);
+  border-radius: var(--radius-sm, 0.375rem);
+  box-shadow: none;
+}
+
+.ticket-table td a[href]:hover {
+  color: var(--color-surface, #fff);
+  background: var(--color-primary, #0d9488);
+  border-color: var(--color-primary, #0d9488);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
 }
 
 .status-badge {
-  display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  background: #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+  background: var(--color-bg, #f1f5f9);
+  color: var(--color-text-muted, #64748b);
+  border: 1px solid var(--color-border-strong, #cbd5e1);
 }
 
 .ticket-meta {
-  margin: 1rem 0;
-  padding: 1rem;
-  background: #fff;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
+  margin: var(--space-md, 1rem) 0;
+  padding: var(--space-md, 1rem) var(--space-lg, 1.5rem);
+  background: var(--color-bg, #f1f5f9);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-lg, 0.75rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
+}
 
-  p {
-    margin: 0.35rem 0;
-  }
+.ticket-meta p {
+  margin: 0.4rem 0;
+  font-size: 0.9375rem;
+  max-width: none;
 }
 
 .ticket-description {
-  margin: 1rem 0;
+  margin: var(--space-lg, 1.5rem) 0;
+  padding: var(--space-md, 1rem);
   white-space: pre-wrap;
-  line-height: 1.5;
+  line-height: 1.65;
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 0.5rem);
 }
 
 .comments {
-  margin-top: 1.5rem;
+  margin-top: var(--space-xl, 2rem);
+  padding-top: var(--space-lg, 1.5rem);
+  border-top: 1px solid var(--color-border, #e2e8f0);
+}
 
-  h2 {
-    font-size: 1.1rem;
-    color: #1a365d;
-  }
+.comments h2 {
+  margin-top: 0;
+  font-size: 1.125rem;
+  color: var(--color-text, #0f172a);
 }
 
 .comment {
-  border: 1px solid #e2e8f0;
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
-  background: #f7fafc;
-
-  .comment-meta {
-    font-size: 0.85rem;
-    color: #4a5568;
-    margin-bottom: 0.5rem;
-  }
-
-  .comment-body {
-    white-space: pre-wrap;
-    margin: 0;
-  }
-
-  .comment-actions {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-
-    a[href] {
-      margin: 0 0.35rem 0 0;
-      padding: 0.3rem 0.6rem;
-      font-size: 0.85rem;
-    }
-  }
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-md, 0.5rem);
+  padding: var(--space-md, 1rem);
+  margin-bottom: var(--space-md, 1rem);
+  background: var(--color-surface, #fff);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
 }
 
-.stack-form {
-  label {
-    display: block;
-    font-weight: 600;
-    margin-top: 1rem;
-  }
+.comment .comment-meta {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted, #64748b);
+  margin-bottom: var(--space-sm, 0.5rem);
+}
 
-  input[type="text"],
-  select,
-  textarea {
-    width: 100%;
-    max-width: 36rem;
-    margin-top: 0.25rem;
-    padding: 0.5rem;
-    box-sizing: border-box;
-  }
+.comment .comment-body {
+  white-space: pre-wrap;
+  margin: 0;
+  font-size: 0.9375rem;
+  max-width: none;
+}
 
-  textarea {
-    min-height: 8rem;
-  }
+.comment .comment-actions {
+  margin-top: var(--space-sm, 0.5rem);
+  font-size: 0.875rem;
+}
 
-  button {
-    margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-  }
+.comment .comment-actions a[href] {
+  display: inline-flex;
+  align-items: center;
+  min-height: auto;
+  margin: 0 var(--space-sm, 0.5rem) 0 0;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-danger, #dc2626);
+  text-decoration: none;
+  background: var(--color-danger-muted, #fef2f2);
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm, 0.375rem);
+  box-shadow: none;
+}
+
+.comment .comment-actions a[href]:hover {
+  color: var(--color-surface, #fff);
+  background: var(--color-danger, #dc2626);
+  border-color: var(--color-danger, #dc2626);
+}
+
+.ticket-page .stack-form label {
+  display: block;
+  font-weight: 600;
+  margin-top: var(--space-md, 1rem);
+}
+
+.ticket-page .stack-form label:first-of-type,
+.ticket-page .stack-form > div:first-child label {
+  margin-top: 0;
+}
+
+.ticket-page .stack-form input[type="text"],
+.ticket-page .stack-form select,
+.ticket-page .stack-form textarea {
+  width: 100%;
+  max-width: 36rem;
+  margin-top: var(--space-xs, 0.25rem);
+  padding: 0.625rem 0.75rem;
+  box-sizing: border-box;
+}
+
+.ticket-page .stack-form textarea {
+  min-height: 8rem;
+}
+
+.ticket-page .stack-form button[type="submit"] {
+  margin-top: var(--space-md, 1rem);
 }
 
 .inline-form {
   display: inline;
-  margin-right: 0.75rem;
+  margin-right: var(--space-md, 1rem);
+  vertical-align: middle;
+}
 
-  button {
-    cursor: pointer;
-  }
+.inline-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.85rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text, #0f172a);
+  cursor: pointer;
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-border-strong, #cbd5e1);
+  border-radius: var(--radius-md, 0.5rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
+  transition: background 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.inline-form button:hover {
+  background: var(--color-bg, #f1f5f9);
+  border-color: var(--color-primary, #0d9488);
+}
+
+.inline-form button:focus-visible {
+  outline: 2px solid var(--color-primary, #0d9488);
+  outline-offset: 2px;
 }
 
 .admin-role-form {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: var(--space-sm, 0.5rem);
   align-items: center;
+}
 
-  select {
-    max-width: 9rem;
-    padding: 0.35rem;
-  }
+.admin-role-form select {
+  max-width: 10rem;
+  min-height: 2.25rem;
+  padding: 0.4rem 0.5rem;
+  font: inherit;
+  font-size: 0.875rem;
+  border: 1px solid var(--color-border-strong, #cbd5e1);
+  border-radius: var(--radius-sm, 0.375rem);
+  background: var(--color-surface, #fff);
+}
 
-  button {
-    padding: 0.35rem 0.6rem;
-    cursor: pointer;
-  }
+.admin-role-form button {
+  min-height: 2.25rem;
+  padding: 0.4rem 0.75rem;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-surface, #fff);
+  cursor: pointer;
+  background: var(--color-primary, #0d9488);
+  border: none;
+  border-radius: var(--radius-sm, 0.375rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
+}
+
+.admin-role-form button:hover {
+  background: var(--color-primary-hover, #0f766e);
 }
 
 .staff-panel {
-  margin: 1rem 0;
-  padding: 1rem;
-  border: 1px solid #bee3f8;
-  background: #ebf8ff;
-  border-radius: 6px;
+  margin: var(--space-lg, 1.5rem) 0;
+  padding: var(--space-lg, 1.5rem);
+  border: 1px solid #7dd3fc;
+  background: linear-gradient(160deg, #f0f9ff 0%, #e0f2fe 100%);
+  border-radius: var(--radius-lg, 0.75rem);
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(15, 23, 42, 0.05));
+}
 
-  h2 {
-    margin-top: 0;
-    font-size: 1rem;
-    color: #2c5282;
-  }
+.staff-panel h2 {
+  margin-top: 0;
+  margin-bottom: var(--space-md, 1rem);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #0369a1;
+}
+
+.staff-panel .stack-form button[type="submit"] {
+  width: auto;
+  max-width: none;
 }
 
 .category-delete-dialog {
+  width: calc(100vw - 2rem);
   max-width: 24rem;
-  padding: 1.25rem;
-  border: 1px solid #cbd5e0;
-  border-radius: 6px;
-  background: #fff;
+  padding: var(--space-lg, 1.5rem);
+  border: none;
+  border-radius: var(--radius-lg, 0.75rem);
+  background: var(--color-surface, #fff);
+  box-shadow: var(--shadow-lg, 0 10px 15px -3px rgba(15, 23, 42, 0.08));
 }
 
 .category-delete-dialog::backdrop {
-  background: rgba(15, 41, 66, 0.35);
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
 }
 
 .category-delete-dialog-field {
-  margin: 1rem 0;
+  margin: var(--space-md, 1rem) 0;
+}
 
-  label {
-    display: block;
-    margin-bottom: 0.35rem;
-    font-weight: 600;
-    color: #1a365d;
-  }
+.category-delete-dialog-field label {
+  display: block;
+  margin-bottom: var(--space-xs, 0.25rem);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--color-text, #0f172a);
+}
 
-  select {
-    width: 100%;
-    max-width: 100%;
-    padding: 0.45rem;
-    box-sizing: border-box;
-  }
+.category-delete-dialog-field select {
+  width: 100%;
+  max-width: 100%;
+  min-height: var(--touch-target, 2.75rem);
+  padding: 0.5rem 0.65rem;
+  font: inherit;
+  font-size: 1rem;
+  border: 1px solid var(--color-border-strong, #cbd5e1);
+  border-radius: var(--radius-md, 0.5rem);
+  background: var(--color-surface, #fff);
+  box-sizing: border-box;
+}
+
+.category-delete-dialog-field select:focus-visible {
+  outline: none;
+  border-color: var(--color-primary, #0d9488);
+  box-shadow: 0 0 0 3px var(--color-primary-muted, rgba(13, 148, 136, 0.12));
 }
 
 .category-delete-dialog-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--space-sm, 0.5rem);
   justify-content: flex-end;
-  margin-top: 1rem;
+  margin-top: var(--space-lg, 1.5rem);
+}
 
-  button {
-    padding: 0.45rem 0.85rem;
-    cursor: pointer;
-  }
+.category-delete-dialog-actions button {
+  min-height: var(--touch-target, 2.75rem);
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: var(--radius-md, 0.5rem);
+  border: 1px solid var(--color-border-strong, #cbd5e1);
+  background: var(--color-surface, #fff);
+  color: var(--color-text, #0f172a);
+}
+
+.category-delete-dialog-actions button:last-child {
+  border-color: var(--color-primary, #0d9488);
+  background: var(--color-primary, #0d9488);
+  color: var(--color-surface, #fff);
+}
+
+.category-delete-dialog-actions button:last-child:hover {
+  background: var(--color-primary-hover, #0f766e);
+  border-color: var(--color-primary-hover, #0f766e);
+}
+
+.category-delete-dialog-actions button:first-child:hover {
+  background: var(--color-bg, #f1f5f9);
 }

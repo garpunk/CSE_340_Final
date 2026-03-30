@@ -8,6 +8,7 @@
   <% if (!categories || categories.length === 0) { %>
     <p>No categories.</p>
   <% } else { %>
+    <div class="table-scroll">
     <table class="ticket-table">
       <thead>
         <tr>
@@ -31,6 +32,7 @@
         <% }); %>
       </tbody>
     </table>
+    </div>
   <% } %>
   <dialog id="categoryReassignDialog" class="category-delete-dialog">
     <p id="categoryReassignDialogText"></p>

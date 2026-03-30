@@ -5,3 +5,4 @@ interview.md
 .env.example
 update_seed_passwords.sql
 byuicse-psql-cert.pem
+study_guide.md
