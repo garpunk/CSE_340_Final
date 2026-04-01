@@ -9,3 +9,4 @@ study_guide.md
 study_guide_2.md
 sql/update_seed_passwords.sql
 bin/byuicse-psql-cert.pem
+views/models/sql/seed.sql
